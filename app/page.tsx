@@ -1,0 +1,292 @@
+'use client';
+
+import Image from "next/image";
+import { 
+  Search, 
+  ShoppingBag, 
+  Menu, 
+  ArrowRight, 
+  Leaf, 
+  FlaskConical, 
+  Handshake, 
+  Sun, 
+  Star, 
+  StarHalf, 
+  Mail, 
+  Globe, 
+  Instagram,
+  Bug
+} from "lucide-react";
+
+import hero from "./assets/hero-spices.png";
+import pTurmeric from "./assets/p-turmeric.png";
+import pChilli from "./assets/p-chilli.png";
+import pCumin from "./assets/p-cumin.png";
+import pCardamom from "./assets/p-cardamom.png";
+
+const features = [
+  { icon: <Leaf className="text-emerald-600 h-7 w-7" />, title: "100% Homegrown", text: "Cultivated directly on our family-owned sustainable farms." },
+  { icon: <FlaskConical className="text-emerald-600 h-7 w-7" />, title: "No Chemicals", text: "Absolutely free from artificial preservatives and additives." },
+  { icon: <Handshake className="text-emerald-600 h-7 w-7" />, title: "Sourced Ethically", text: "Fair wages and respectful partnerships with local growers." },
+  { icon: <Sun className="text-emerald-600 h-7 w-7" />, title: "Sun-Dried", text: "Traditional sun-drying methods to lock in essential oils." },
+];
+
+const products = [
+  { tag: "Organic", rating: 4.8, name: "Alleppey Turmeric", desc: "High curcumin content, ethically harvested.", price: "$12.00", sizes: ["100g", "250g", "500g"], img: pTurmeric },
+  { tag: "Artisanal", rating: 5.0, name: "Hand-pounded Chilli", desc: "Smoky, robust heat from sun-dried peppers.", price: "$14.50", sizes: ["100g", "250g", "500g"], img: pChilli },
+  { tag: "Organic", rating: 4.2, name: "Wild Cumin Seeds", desc: "Earthy and aromatic, perfect for tempering.", price: "$9.00", sizes: ["100g", "250g", "500g"], img: pCumin },
+  { tag: "Fair Trade", rating: 4.9, name: "Green Cardamom", desc: "Sweet, floral notes. Hand-picked at dawn.", price: "$22.00", sizes: ["50g", "100g", "250g"], img: pCardamom },
+];
+
+const journey = [
+  { icon: <Leaf className="h-7 w-7" />, title: "Harvesting", text: "Hand-picked at peak potency by our expert farmers." },
+  { icon: <Sun className="h-7 w-7" />, title: "Sun-Drying", text: "Naturally dried under the sun to preserve essential oils." },
+  { icon: <Bug className="h-7 w-7" />, title: "Traditional Grinding", text: "Stone-ground at low speeds to prevent flavor loss." },
+  { icon: <ShoppingBag className="h-7 w-7" />, title: "Eco-Packaging", text: "Sealed in biodegradable, sustainable materials." },
+];
+
+function Stars({ value }: { value: number }) {
+  const full = Math.floor(value);
+  const half = value - full >= 0.5;
+  return (
+    <span className="inline-flex items-center text-amber-500 leading-none">
+      {Array.from({ length: full }).map((_, i) => (
+        <Star key={i} className="h-4 w-4 fill-current" />
+      ))}
+      {half && <StarHalf className="h-4 w-4 fill-current" />}
+      {Array.from({ length: 5 - full - (half ? 1 : 0) }).map((_, i) => (
+        <Star key={`e${i}`} className="h-4 w-4 opacity-25" />
+      ))}
+      <span className="ml-1.5 text-xs text-slate-500 font-medium">({value.toFixed(1)})</span>
+    </span>
+  );
+}
+
+function ProductCard({ p }: { p: (typeof products)[number] }) {
+  return (
+    <article className="group flex flex-col">
+      <div className="relative aspect-square overflow-hidden bg-slate-100 rounded-sm">
+        <Image
+          src={p.img}
+          alt={p.name}
+          placeholder="blur"
+          className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+        />
+        <span className="absolute top-3 left-3 bg-amber-50 text-slate-900 text-[10px] tracking-[0.18em] uppercase px-2.5 py-1 rounded-full font-semibold">
+          {p.tag}
+        </span>
+      </div>
+      <div className="pt-5 flex-1 flex flex-col">
+        <Stars value={p.rating} />
+        <h3 className="mt-2 text-xl text-slate-900">{p.name}</h3>
+        <p className="mt-1 text-sm text-slate-500">{p.desc}</p>
+        <div className="mt-4 flex items-baseline gap-3">
+          <span className="text-lg font-semibold text-slate-900">{p.price}</span>
+          <div className="flex gap-1 ml-auto">
+            {p.sizes.map((s, i) => (
+              <button
+                key={s}
+                className={`text-[11px] px-2 py-1 rounded border transition-colors ${
+                  i === 0
+                    ? "border-slate-900 bg-slate-900 text-amber-50"
+                    : "border-slate-200 text-slate-500 hover:border-slate-900 hover:text-slate-900"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+        <button className="mt-4 w-full border border-slate-900 py-2.5 text-xs tracking-[0.2em] uppercase font-semibold text-slate-900 hover:bg-slate-900 hover:text-amber-50 transition-colors">
+          Add to Cart
+        </button>
+      </div>
+    </article>
+  );
+}
+
+export default function Index() {
+  return (
+    <div className="min-h-screen bg-amber-50 text-slate-900">
+      {/* NAV */}
+      <header className="absolute top-0 left-0 right-0 z-30">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-6 flex items-center justify-between">
+          <a href="/" className="font-serif text-2xl tracking-tight text-slate-900">
+            Diarch <span className="italic text-emerald-700">Organic</span>
+          </a>
+          <nav className="hidden md:flex items-center gap-10 text-sm text-slate-900/80">
+            <a href="#shop" className="hover:text-emerald-700 transition-colors">Shop</a>
+            <a href="#story" className="hover:text-emerald-700 transition-colors">Our Story</a>
+            <a href="#sustain" className="hover:text-emerald-700 transition-colors">Sustainability</a>
+            <a href="#recipes" className="hover:text-emerald-700 transition-colors">Recipes</a>
+          </nav>
+          <div className="flex items-center gap-5 text-slate-900">
+            <button aria-label="Search" className="hover:text-emerald-700 transition-colors">
+              <Search className="h-5 w-5" />
+            </button>
+            <button aria-label="Cart" className="relative hover:text-emerald-700 transition-colors">
+              <ShoppingBag className="h-5 w-5" />
+              <span className="absolute -top-1.5 -right-2 bg-emerald-600 text-white text-[10px] font-semibold rounded-full h-4 min-w-4 px-1 flex items-center justify-center">2</span>
+            </button>
+            <button aria-label="Menu" className="md:hidden">
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 pb-24 lg:pt-40 lg:pb-32 grid lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-6 relative z-10">
+            <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-emerald-700 font-semibold mb-8">
+              <span className="h-px w-8 bg-emerald-700" />
+              Seed to Sensory
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl leading-[1.02] text-slate-900 font-serif">
+              Pure, Homegrown <em className="italic text-emerald-700 font-normal">Spices</em> Straight From Nature's Lap.
+            </h1>
+            <p className="mt-7 text-base md:text-lg text-slate-600 max-w-xl leading-relaxed">
+              Discover the sensory ritual of cooking with our artisanal, farm-to-table ingredients. Cultivated with respect for the earth and traditional harvesting methods.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a href="#shop" className="inline-flex items-center gap-3 bg-slate-900 text-amber-50 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-emerald-700 transition-colors">
+                <span>Shop Fresh Spices</span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a href="#story" className="inline-flex items-center gap-2 px-2 py-4 text-xs tracking-[0.2em] uppercase font-semibold text-slate-900 border-b border-slate-900 hover:text-emerald-700 hover:border-emerald-700 transition-colors">
+                Explore Our Farms
+              </a>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 relative">
+            <div className="relative aspect-[4/5] lg:aspect-[5/6] overflow-hidden rounded-sm bg-emerald-100 flex items-center justify-center">
+              <Image
+                src={hero}
+                alt="Beautiful Arrangement of Organic Spices"
+                placeholder="blur"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            {/* Floating badge */}
+            <div className="absolute -bottom-6 -left-6 md:-left-10 bg-amber-50 border border-slate-200 rounded-full h-32 w-32 md:h-40 md:w-40 flex flex-col items-center justify-center text-center shadow-xl">
+              <span className="font-serif text-3xl md:text-4xl text-emerald-700 leading-none">100%</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase mt-1.5 text-slate-900 font-semibold">Organic<br/>Certified</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Features strip */}
+        <div className="border-t border-slate-200 bg-slate-50">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-200">
+            {features.map((f) => (
+              <div key={f.title} className="py-8 px-4 lg:px-8 first:pl-0 last:pr-0">
+                {f.icon}
+                <h3 className="mt-3 text-lg text-slate-900">{f.title}</h3>
+                <p className="mt-1.5 text-sm text-slate-500 leading-relaxed">{f.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUCTS */}
+      <section id="shop" className="py-24 lg:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
+            <div>
+              <div className="text-[11px] tracking-[0.25em] uppercase text-emerald-700 font-semibold mb-3">— Curated Harvest</div>
+              <h2 className="text-4xl md:text-5xl text-slate-900 max-w-xl font-serif">Our signature spices, ready for your kitchen.</h2>
+            </div>
+            <a href="#" className="inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase font-semibold text-slate-900 hover:text-emerald-700 transition-colors">
+              <span>View All Products</span> 
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+            {products.map((p) => <ProductCard key={p.name} p={p} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* JOURNEY */}
+      <section id="story" className="py-24 lg:py-32 bg-slate-900 text-amber-50 relative">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-20">
+            <div className="text-[11px] tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3">— From Seed to Table</div>
+            <h2 className="text-4xl md:text-5xl font-serif">The Journey to Your Table</h2>
+            <p className="mt-5 text-slate-300 leading-relaxed">
+              We believe transparency is the purest ingredient. Follow the path of our spices from seed to sensory experience.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-6 relative">
+            <div className="hidden lg:block absolute top-8 left-[12%] right-[12%] border-t border-dashed border-slate-700" />
+            {journey.map((j, i) => (
+              <div key={j.title} className="relative text-center lg:text-left">
+                <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-full bg-amber-50 text-slate-900 mb-5">
+                  {j.icon}
+                  <span className="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-emerald-600 text-white text-[11px] font-semibold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="text-xl text-amber-50">{j.title}</h3>
+                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{j.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer id="sustain" className="bg-slate-50 pt-20 pb-10 border-t border-slate-200">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 pb-14 border-b border-slate-200">
+            <div className="col-span-2 max-w-sm">
+              <div className="font-serif text-2xl text-slate-900">
+                Diarch <span className="italic text-emerald-700">Organic</span>
+              </div>
+              <p className="mt-4 text-sm text-slate-500 leading-relaxed">
+                Bringing the purity of homegrown, artisanal spices to your kitchen. Cultivated with care, harvested with respect.
+              </p>
+              <div className="mt-6 flex gap-3">
+                <a href="#" className="h-10 w-10 inline-flex items-center justify-center border border-slate-200 rounded-full hover:bg-slate-900 text-slate-700 hover:text-amber-50 hover:border-slate-900 transition-colors">
+                  <Mail className="h-4 w-4" />
+                </a>
+                <a href="#" className="h-10 w-10 inline-flex items-center justify-center border border-border rounded-full hover:bg-slate-900 text-slate-700 hover:text-amber-50 hover:border-slate-900 transition-colors">
+                  <Globe className="h-4 w-4" />
+                </a>
+                <a href="#" className="h-10 w-10 inline-flex items-center justify-center border border-border rounded-full hover:bg-slate-900 text-slate-700 hover:text-amber-50 hover:border-slate-900 transition-colors">
+                  <Instagram className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-[11px] tracking-[0.25em] uppercase text-slate-900 font-semibold mb-5">Explore</h4>
+              <ul className="space-y-3 text-sm text-slate-500">
+                <li><a href="#" className="hover:text-emerald-700">Shop All</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Our Story</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Sustainability</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Recipes</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[11px] tracking-[0.25em] uppercase text-slate-900 font-semibold mb-5">Support</h4>
+              <ul className="space-y-3 text-sm text-slate-500">
+                <li><a href="#" className="hover:text-emerald-700">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Shipping Info</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-emerald-700">Wholesale</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-6 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-400">
+            <span>© 2026 Diarch Organic. Purely Homegrown.</span>
+            <span className="tracking-[0.2em] uppercase">Cultivated · Harvested · Delivered</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
