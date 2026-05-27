@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import { motion } from "framer-motion";
 import { 
   ArrowRight, 
   Leaf, 
@@ -23,6 +24,24 @@ import pChilli from "./assets/p-chilli.png";
 import pCumin from "./assets/p-cumin.png";
 import pCardamom from "./assets/p-cardamom.png";
 
+// Premium Scroll Animation Settings
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.610, 0.355, 1.000] }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 }
+  }
+};
+
 const features = [
   { icon: <Leaf className="text-emerald-600 h-7 w-7" />, title: "100% Homegrown", text: "Cultivated directly on our family-owned sustainable farms." },
   { icon: <FlaskConical className="text-emerald-600 h-7 w-7" />, title: "No Chemicals", text: "Absolutely free from artificial preservatives and additives." },
@@ -37,11 +56,11 @@ const products = [
   { tag: "Fair Trade", rating: 4.9, name: "Green Cardamom", desc: "Sweet, floral notes. Hand-picked at dawn.", price: "$22.00", sizes: ["50g", "100g", "250g"], img: pCardamom },
 ];
 
-const journey = [
-  { icon: <Leaf className="h-6 w-6 text-emerald-700" />, title: "Sourcing from Earth", text: "Partnering with local certified farmers for 100% organic, chemical-free sustainable harvesting." },
-  { icon: <Sun className="h-6 w-6 text-emerald-700" />, title: "Sun-Dried & Hand-Picked", text: "Naturally dried under the pristine sun and meticulously hand-sorted to separate only premium grades." },
-  { icon: <Activity className="h-6 w-6 text-emerald-700" />, title: "Traditional Cold-Grinding", text: "Ground slowly at low temperatures using traditional ethics to lock in natural essential oils and rich aroma." },
-  { icon: <ShoppingBag className="h-6 w-6 text-emerald-700" />, title: "Eco-Friendly Packaging", text: "Sustainable, plastic-free eco-packaging that keeps spices fresh and aromatic for a longer time." },
+const journeySteps = [
+  { title: "Sourcing from Earth", subtitle: "100% Organic Harvesting", desc: "We partner directly with local growers in India's most nutrient-rich soil belts, securing direct-trade fair wages and ensuring 100% pesticide-free, chemical-free organic farming practices.", icon: <Leaf className="h-6 w-6 text-emerald-700" /> },
+  { title: "Sun-Dried & Hand-Picked", subtitle: "Meticulous Sorting", desc: "Harvested crops are naturally dried on large brick patios bathed in tropical sunlight. Our expert sorters meticulously hand-pick and sort out any imperfect pods or roots, ensuring only premium-grade stock moves forward.", icon: <Sun className="h-6 w-6 text-emerald-700" /> },
+  { title: "Traditional Cold-Grinding", subtitle: "Locking In Potent Oils", desc: "Commercial grinding heats spices, evaporating crucial natural oils. We grind slowly using stone equipment at ultra-low speeds and temperatures to lock in the absolute peak essential oil content, flavor profile, and robust aroma.", icon: <Activity className="h-6 w-6 text-emerald-700" /> },
+  { title: "Eco-Friendly Packaging", subtitle: "Sustainable Freshness", desc: "Spices are immediately packed and sealed in our biodegradable, plastic-free custom pouches and glass jars. Zero plastic waste, absolute flavor retention, and full transparency.", icon: <ShoppingBag className="h-6 w-6 text-emerald-700" /> },
 ];
 
 function Stars({ value }: { value: number }) {
@@ -63,7 +82,7 @@ function Stars({ value }: { value: number }) {
 
 function ProductCard({ p }: { p: (typeof products)[number] }) {
   return (
-    <article className="group flex flex-col">
+    <motion.article variants={fadeInUp} className="group flex flex-col">
       <div className="relative aspect-square overflow-hidden bg-slate-100 rounded-sm">
         <Image
           src={p.img}
@@ -100,19 +119,24 @@ function ProductCard({ p }: { p: (typeof products)[number] }) {
           Add to Cart
         </button>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-amber-50 text-slate-900">
+    <div className="min-h-screen bg-amber-50 text-slate-900 overflow-x-hidden">
       <Navbar />
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section className="relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-32 pb-24 lg:pt-40 lg:pb-32 grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-6 relative z-10"
+          >
             <div className="inline-flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-emerald-700 font-semibold mb-8">
               <span className="h-px w-8 bg-emerald-700" />
               Seed to Sensory
@@ -132,9 +156,14 @@ export default function Index() {
                 Explore Our Farms
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-6 relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+            className="lg:col-span-6 relative"
+          >
             <div className="relative aspect-[4/5] lg:aspect-[5/6] overflow-hidden rounded-sm bg-emerald-100 flex items-center justify-center">
               <Image
                 src={hero}
@@ -143,32 +172,48 @@ export default function Index() {
                 className="h-full w-full object-cover"
               />
             </div>
-            {/* Floating badge */}
-            <div className="absolute -bottom-6 -left-6 md:-left-10 bg-amber-50 border border-slate-200 rounded-full h-32 w-32 md:h-40 md:w-40 flex flex-col items-center justify-center text-center shadow-xl">
+            <motion.div 
+              initial={{ scale: 0, rotate: -20 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 100, delay: 0.6 }}
+              className="absolute -bottom-6 -left-6 md:-left-10 bg-amber-50 border border-slate-200 rounded-full h-32 w-32 md:h-40 md:w-40 flex flex-col items-center justify-center text-center shadow-xl"
+            >
               <span className="font-serif text-3xl md:text-4xl text-emerald-700 leading-none">100%</span>
               <span className="text-[10px] tracking-[0.2em] uppercase mt-1.5 text-slate-900 font-semibold">Organic<br/>Certified</span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
-        {/* Features strip */}
+        {/* Features Strip */}
         <div className="border-t border-slate-200 bg-slate-50">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-200">
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-2 lg:grid-cols-4 divide-x divide-slate-200"
+          >
             {features.map((f) => (
-              <div key={f.title} className="py-8 px-4 lg:px-8 first:pl-0 last:pr-0">
+              <motion.div variants={fadeInUp} key={f.title} className="py-8 px-4 lg:px-8 first:pl-0 last:pr-0">
                 {f.icon}
                 <h3 className="mt-3 text-lg text-slate-900">{f.title}</h3>
                 <p className="mt-1.5 text-sm text-slate-500 leading-relaxed">{f.text}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* PRODUCTS */}
+      {/* PRODUCTS SECTION */}
       <section id="shop" className="py-24 lg:py-32">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="flex items-end justify-between flex-wrap gap-6 mb-14"
+          >
             <div>
               <div className="text-[11px] tracking-[0.25em] uppercase text-emerald-700 font-semibold mb-3">— Curated Harvest</div>
               <h2 className="text-4xl md:text-5xl text-slate-900 max-w-xl font-serif">Our signature spices, ready for your kitchen.</h2>
@@ -177,48 +222,68 @@ export default function Index() {
               <span>View All Products</span> 
               <ArrowRight className="h-4 w-4" />
             </a>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8"
+          >
             {products.map((p) => <ProductCard key={p.name} p={p} />)}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* PREMIUM INTERACTIVE TIMELINE JOURNEY */}
+      {/* PREMIUM FARM TO TABLE INTERACTIVE TIMELINE */}
       <section id="story" className="py-24 lg:py-32 bg-[#fbf9f4] text-[#1c352d]">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="text-center max-w-2xl mx-auto mb-20">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center max-w-2xl mx-auto mb-20"
+          >
             <div className="text-[11px] tracking-[0.25em] uppercase text-amber-600 font-semibold mb-3">— Our Process</div>
             <h2 className="text-4xl md:text-5xl font-serif text-[#1c352d]">The Farm to Table Journey</h2>
             <p className="mt-5 text-gray-600 leading-relaxed">
               Discover how we bring the world's finest, unadulterated organic spices straight from our certified fields directly to your kitchen.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="relative border-l border-amber-200/80 ml-4 md:ml-32 space-y-12">
-            {journey.map((j, i) => (
-              <div key={j.title} className="relative pl-8 md:pl-12 group">
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="relative border-l border-amber-200/80 ml-4 md:ml-32 space-y-12"
+          >
+            {journeySteps.map((j, i) => (
+              <motion.div variants={fadeInUp} key={j.title} className="relative pl-8 md:pl-12 group">
                 {/* Timeline Number Node */}
                 <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-[#1c352d] border-4 border-[#fbf9f4] flex items-center justify-center text-white text-xs font-bold transition-transform duration-300 group-hover:scale-110 shadow-sm">
                   {i + 1}
                 </div>
-                {/* Content Box */}
+                {/* Premium Content Box */}
                 <div className="bg-white p-6 rounded border border-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md md:-ml-24 md:pl-28 flex flex-col md:flex-row md:items-center gap-5">
                   <div className="h-12 w-12 shrink-0 bg-amber-50 rounded-full flex items-center justify-center border border-amber-100">
                     {j.icon}
                   </div>
                   <div>
                     <h3 className="text-xl font-serif text-[#1c352d] group-hover:text-emerald-700 transition-colors">{j.title}</h3>
-                    <p className="text-gray-600 text-sm mt-1 max-w-2xl leading-relaxed">{j.text}</p>
+                    <span className="text-[11px] font-medium tracking-wide text-amber-600 uppercase block mt-0.5">{j.subtitle}</span>
+                    <p className="text-gray-600 text-sm mt-2 max-w-3xl leading-relaxed">{j.desc}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER SECTION */}
       <footer id="sustain" className="bg-slate-50 pt-20 pb-10 border-t border-slate-200">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 pb-14 border-b border-slate-200">
