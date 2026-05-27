@@ -13,7 +13,7 @@ import {
   Mail, 
   Globe, 
   Instagram,
-  Bug,
+  Activity,
   ShoppingBag
 } from "lucide-react";
 
@@ -38,10 +38,10 @@ const products = [
 ];
 
 const journey = [
-  { icon: <Leaf className="h-7 w-7" />, title: "Harvesting", text: "Hand-picked at peak potency by our expert farmers." },
-  { icon: <Sun className="h-7 w-7" />, title: "Sun-Drying", text: "Naturally dried under the sun to preserve essential oils." },
-  { icon: <Bug className="h-7 w-7" />, title: "Traditional Grinding", text: "Stone-ground at low speeds to prevent flavor loss." },
-  { icon: <ShoppingBag className="h-7 w-7" />, title: "Eco-Packaging", text: "Sealed in biodegradable, sustainable materials." },
+  { icon: <Leaf className="h-6 w-6 text-emerald-700" />, title: "Sourcing from Earth", text: "Partnering with local certified farmers for 100% organic, chemical-free sustainable harvesting." },
+  { icon: <Sun className="h-6 w-6 text-emerald-700" />, title: "Sun-Dried & Hand-Picked", text: "Naturally dried under the pristine sun and meticulously hand-sorted to separate only premium grades." },
+  { icon: <Activity className="h-6 w-6 text-emerald-700" />, title: "Traditional Cold-Grinding", text: "Ground slowly at low temperatures using traditional ethics to lock in natural essential oils and rich aroma." },
+  { icon: <ShoppingBag className="h-6 w-6 text-emerald-700" />, title: "Eco-Friendly Packaging", text: "Sustainable, plastic-free eco-packaging that keeps spices fresh and aromatic for a longer time." },
 ];
 
 function Stars({ value }: { value: number }) {
@@ -184,29 +184,34 @@ export default function Index() {
         </div>
       </section>
 
-      {/* JOURNEY */}
-      <section id="story" className="py-24 lg:py-32 bg-slate-900 text-amber-50 relative">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+      {/* PREMIUM INTERACTIVE TIMELINE JOURNEY */}
+      <section id="story" className="py-24 lg:py-32 bg-[#fbf9f4] text-[#1c352d]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="text-center max-w-2xl mx-auto mb-20">
-            <div className="text-[11px] tracking-[0.25em] uppercase text-emerald-400 font-semibold mb-3">— From Seed to Table</div>
-            <h2 className="text-4xl md:text-5xl font-serif">The Journey to Your Table</h2>
-            <p className="mt-5 text-slate-300 leading-relaxed">
-              We believe transparency is the purest ingredient. Follow the path of our spices from seed to sensory experience.
+            <div className="text-[11px] tracking-[0.25em] uppercase text-amber-600 font-semibold mb-3">— Our Process</div>
+            <h2 className="text-4xl md:text-5xl font-serif text-[#1c352d]">The Farm to Table Journey</h2>
+            <p className="mt-5 text-gray-600 leading-relaxed">
+              Discover how we bring the world's finest, unadulterated organic spices straight from our certified fields directly to your kitchen.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-6 relative">
-            <div className="hidden lg:block absolute top-8 left-[12%] right-[12%] border-t border-dashed border-slate-700" />
+          <div className="relative border-l border-amber-200/80 ml-4 md:ml-32 space-y-12">
             {journey.map((j, i) => (
-              <div key={j.title} className="relative text-center lg:text-left">
-                <div className="relative inline-flex items-center justify-center h-16 w-16 rounded-full bg-amber-50 text-slate-900 mb-5">
-                  {j.icon}
-                  <span className="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-emerald-600 text-white text-[11px] font-semibold flex items-center justify-center">
-                    {i + 1}
-                  </span>
+              <div key={j.title} className="relative pl-8 md:pl-12 group">
+                {/* Timeline Number Node */}
+                <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-[#1c352d] border-4 border-[#fbf9f4] flex items-center justify-center text-white text-xs font-bold transition-transform duration-300 group-hover:scale-110 shadow-sm">
+                  {i + 1}
                 </div>
-                <h3 className="text-xl text-amber-50">{j.title}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{j.text}</p>
+                {/* Content Box */}
+                <div className="bg-white p-6 rounded border border-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md md:-ml-24 md:pl-28 flex flex-col md:flex-row md:items-center gap-5">
+                  <div className="h-12 w-12 shrink-0 bg-amber-50 rounded-full flex items-center justify-center border border-amber-100">
+                    {j.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-serif text-[#1c352d] group-hover:text-emerald-700 transition-colors">{j.title}</h3>
+                    <p className="text-gray-600 text-sm mt-1 max-w-2xl leading-relaxed">{j.text}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
