@@ -1,10 +1,8 @@
 'use client';
 
 import Image from "next/image";
+import Navbar from "@/components/Navbar";
 import { 
-  Search, 
-  ShoppingBag, 
-  Menu, 
   ArrowRight, 
   Leaf, 
   FlaskConical, 
@@ -15,7 +13,8 @@ import {
   Mail, 
   Globe, 
   Instagram,
-  Bug
+  Bug,
+  ShoppingBag
 } from "lucide-react";
 
 import hero from "./assets/hero-spices.png";
@@ -108,32 +107,7 @@ function ProductCard({ p }: { p: (typeof products)[number] }) {
 export default function Index() {
   return (
     <div className="min-h-screen bg-amber-50 text-slate-900">
-      {/* NAV */}
-      <header className="absolute top-0 left-0 right-0 z-30">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-6 flex items-center justify-between">
-          <a href="/" className="font-serif text-2xl tracking-tight text-slate-900">
-            Diarch <span className="italic text-emerald-700">Organic</span>
-          </a>
-          <nav className="hidden md:flex items-center gap-10 text-sm text-slate-900/80">
-            <a href="#shop" className="hover:text-emerald-700 transition-colors">Shop</a>
-            <a href="#story" className="hover:text-emerald-700 transition-colors">Our Story</a>
-            <a href="#sustain" className="hover:text-emerald-700 transition-colors">Sustainability</a>
-            <a href="#recipes" className="hover:text-emerald-700 transition-colors">Recipes</a>
-          </nav>
-          <div className="flex items-center gap-5 text-slate-900">
-            <button aria-label="Search" className="hover:text-emerald-700 transition-colors">
-              <Search className="h-5 w-5" />
-            </button>
-            <button aria-label="Cart" className="relative hover:text-emerald-700 transition-colors">
-              <ShoppingBag className="h-5 w-5" />
-              <span className="absolute -top-1.5 -right-2 bg-emerald-600 text-white text-[10px] font-semibold rounded-full h-4 min-w-4 px-1 flex items-center justify-center">2</span>
-            </button>
-            <button aria-label="Menu" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -265,10 +239,9 @@ export default function Index() {
             <div>
               <h4 className="text-[11px] tracking-[0.25em] uppercase text-slate-900 font-semibold mb-5">Explore</h4>
               <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-emerald-700">Shop All</a></li>
-                <li><a href="#" className="hover:text-emerald-700">Our Story</a></li>
-                <li><a href="#" className="hover:text-emerald-700">Sustainability</a></li>
-                <li><a href="#" className="hover:text-emerald-700">Recipes</a></li>
+                <li><a href="/shop" className="hover:text-emerald-700">Shop All</a></li>
+                <li><a href="/#story" className="hover:text-emerald-700">Our Story</a></li>
+                <li><a href="/contact" className="hover:text-emerald-700">Contact Us</a></li>
               </ul>
             </div>
             <div>
